@@ -1,8 +1,17 @@
 let list = document.querySelector('.compose-sideBar')
 let myList = document.querySelector('.sideBar')
 let input = document.querySelector('textarea')
+let madalOyna = document.querySelector('.side-two')
+let MyPhoto = document.querySelector('.heading-avatar-icon img')
+let profilePhoto = document.querySelector('.conversation .heading-avatar .heading-avatar-icon img')
+let profileName = document.querySelector('.heading-name .heading-name-meta')
 let users = []
 let chat = []
+
+;(async()=>{
+    const My = await request("/users", "POST")
+    MyPhoto.src = backendApi + My.profilImg
+})()
 
 ;(async()=>{
     users =  await  request('/users')
@@ -31,6 +40,10 @@ async function renderUsers(){
             </div>
         </div>`
         list.append(divv)
+        divv.onclick = () =>{
+            renderChat(user.userId)
+            madalOyna.style="left: -100%;"
+        }
     });
 }
 
@@ -74,6 +87,8 @@ async function renderMyUsers(){
             </div>`
         myList.append(divv)
         divv.onclick = () => {
+            profilePhoto.src = backendApi+ user.profilImg
+            profileName.textContent = user.username
             renderChat(user.userId)
         }   
     });
@@ -81,10 +96,42 @@ async function renderMyUsers(){
 
 
 async function renderChat(id){
+    conversation.innerHTML = null
     input.removeAttribute('disabled','disabled')
     let chat = chats.find(user => user.userId == id)
+    if(!chat) return
     chat.message.map(chatt => {
-        
+        if(chatt.user){
+            const [ div ] = createElements('div')
+            div.setAttribute("class", "row message-body")
+            div.innerHTML = `
+                <div class="col-sm-12 message-main-receiver">
+                    <div class="receiver">
+                        <div class="message-text">
+                            ${chatt.mess}
+                        </div>
+                        <span class="message-time pull-right">
+                            ${chatt.time}
+                        </span>
+                    </div>
+            </div>`
+            conversation.append(div)
+        }else if(chatt.me){
+            const [ div ] = createElements('div')
+            div.setAttribute("class", "row message-body")
+            div.innerHTML = `
+                <div class="col-sm-12 message-main-sender">
+                    <div class="sender">
+                    <div class="message-text">
+                        ${chatt.mess}
+                    </div>
+                        <span class="message-time pull-right">
+                            ${chatt.time}
+                        </span>
+                    </div>
+                </div>`
+            conversation.append(div)    
+        }
     })
 }
 
