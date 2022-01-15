@@ -1,0 +1,25 @@
+.modal-dialog {
+	margin-top: 120px;
+	padding: 25px;
+}
+
+.center-block {
+	margin: 0;
+	padding: 0;
+}
+
+.pull-right {
+	margin: 10px 0;
+}
+
+#errorMessage {
+	display: block;
+	text-align: center;
+	color:  red;
+	font-size: 12px;
+	height: 15px;
+}
+
+#inputFile {
+	display: none;
+}
