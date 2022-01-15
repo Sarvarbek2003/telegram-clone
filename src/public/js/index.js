@@ -6,7 +6,7 @@ let chat = []
 
 ;(async()=>{
     users =  await  request('/users')
-    chat = await  request('/users/my')
+    chats = await  request('/users/my')
 })()
 
 async function renderUsers(){
@@ -41,7 +41,10 @@ async function renderMyUsers(){
     users.filter(myuser => {
         return myUser.map(user => {
             if(user.userId == myuser.userId){
-                user.message.map(el => myuser.time = el.time)
+                user.message.map(el => {
+                    myuser.time = el.time 
+                    myuser.text = el.mess
+                })
                 userlar.push(myuser)
             }
         })
@@ -59,8 +62,8 @@ async function renderMyUsers(){
             <div class="col-sm-9 col-xs-9 sideBar-main">
             <div class="row">
                 <div class="col-sm-8 col-xs-8 sideBar-name">
-                <span class="name-meta">${user.username}
-                </span>
+                <span class="name-meta">${user.username}</span>
+                <p class="pp">${user.text}</p>
                 </div>
                 <div class="col-sm-4 col-xs-4 pull-right sideBar-time">
                 <span class="time-meta pull-right">${user.time}
@@ -79,9 +82,12 @@ async function renderMyUsers(){
 
 async function renderChat(id){
     input.removeAttribute('disabled','disabled')
-    
+    let chat = chats.find(user => user.userId == id)
+    chat.message.map(chatt => {
+        
+    })
 }
 
 
-renderUsers()
+renderUsers()   
 renderMyUsers()
