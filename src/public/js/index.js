@@ -1,22 +1,27 @@
 let list = document.querySelector('.compose-sideBar')
 let myList = document.querySelector('.sideBar')
 let input = document.querySelector('textarea')
+let send = document.querySelector('.reply-send')
 let madalOyna = document.querySelector('.side-two')
 let MyPhoto = document.querySelector('.heading-avatar-icon img')
 let profilePhoto = document.querySelector('.conversation .heading-avatar .heading-avatar-icon img')
 let profileName = document.querySelector('.heading-name .heading-name-meta')
 let users = []
 let chat = []
+let chats = []
+
 
 ;(async()=>{
     const My = await request("/users", "POST")
     MyPhoto.src = backendApi + My.profilImg
 })()
 
-;(async()=>{
+
+async function reqq(){
     users =  await  request('/users')
     chats = await  request('/users/my')
-})()
+}
+reqq()
 
 async function renderUsers(){
     if (!(users.length)) users =  await  request('/users')
@@ -90,6 +95,8 @@ async function renderMyUsers(){
             profilePhoto.src = backendApi+ user.profilImg
             profileName.textContent = user.username
             renderChat(user.userId)
+		    window.localStorage.setItem('userId', user.userId)
+
         }   
     });
 }
@@ -135,6 +142,18 @@ async function renderChat(id){
     })
 }
 
+send.onclick = async() =>{
+    if(!input.value) return
+    input.value.length = 500
+    
+    let newMessage = {
+        text: input.value,
+        userId: window.localStorage.getItem('userId')
+    }   
+    chats = await  request('/users/my', 'POST', newMessage)
+    renderChat(+(window.localStorage.getItem('userId')))
+    
+}
 
 renderUsers()   
 renderMyUsers()

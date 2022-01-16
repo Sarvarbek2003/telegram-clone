@@ -12,7 +12,6 @@ form.onsubmit = async event => {
 	
 		const response = await request('/auth/register', 'POST', formData)		
 		window.localStorage.setItem('token', response.token)
-		window.localStorage.setItem('userId', response.userId)
 		window.location = '/'
 		
 	} catch(error) {
