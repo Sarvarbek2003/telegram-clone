@@ -262,9 +262,6 @@ composeText.onkeyup = () =>{
 }
 
 
-
-
-
 let renderTrue = true 
 
 setInterval(() => {
@@ -273,6 +270,24 @@ if(renderTrue){
     renderMyUsers()
 }
 }, 1000);
+
+
+
+
+let div = document.querySelector('.message');
+
+conversation.addEventListener('scroll', el => {
+    scroll = false
+    if(div.scrollTop > 890) scroll = renderTrue
+})
+
+let scroll = true
+setInterval(() => {
+    if(scroll){
+        div.scrollTop = div.scrollHeight - div.clientHeight;
+    }
+}, 500);
+
 
 
 setInterval(async() => {
