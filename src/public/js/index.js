@@ -233,6 +233,7 @@ send.onclick = async(event) =>{
     input.value = null
     chats = await  request('/users/my', 'POST', newMessage)
     renderChat(+(window.localStorage.getItem('userId')))
+    conversation.scrollTop = conversation.scrollHeight - conversation.clientHeight;
 
 }
 
@@ -277,13 +278,13 @@ if(renderTrue){
 let div = document.querySelector('.message');
 
 conversation.addEventListener('scroll', el => {
-    scroll = false
-    if(div.scrollTop > 890) scroll = renderTrue
+    scrolll = false
+    if(div.scrollTop > (div.scrollHeight - div.clientHeight)-20) scrolll = true
 })
 
-let scroll = true
+let scrolll = true
 setInterval(() => {
-    if(scroll){
+    if(scrolll){
         div.scrollTop = div.scrollHeight - div.clientHeight;
     }
 }, 500);
