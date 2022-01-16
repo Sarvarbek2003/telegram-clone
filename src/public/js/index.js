@@ -18,11 +18,12 @@ let chats = []
 
 
 async function reqq(){
+    users = []
+    chats = []
     users =  await  request('/users')
     chats = await  request('/users/my')
 }
 reqq()
-
 async function renderUsers(){
     if (!(users.length)) users =  await  request('/users')
     users.map(user => {
@@ -47,14 +48,18 @@ async function renderUsers(){
         list.append(divv)
         divv.onclick = () =>{
             renderChat(user.userId)
+            profilePhoto.src = backendApi+ user.profilImg
+            profileName.textContent = user.username
+            window.localStorage.setItem('userId', user.userId)
             madalOyna.style="left: -100%;"
         }
     });
 }
 
 async function renderMyUsers(){
-    if (!(users.length)) users =  await  request('/users')
-    let myUser = await  request('/users/my')
+    myList.innerHTML = null
+    // if (!(users.length)) users =  await  request('/users')
+    let myUser = chats
     let userlar = []
     users.filter(myuser => {
         return myUser.map(user => {
@@ -142,9 +147,9 @@ async function renderChat(id){
     })
 }
 
-send.onclick = async() =>{
+send.onclick = async(event) =>{
+    event.preventDefault()
     if(!input.value) return
-    input.value.length = 500
     
     let newMessage = {
         text: input.value,
@@ -152,8 +157,20 @@ send.onclick = async() =>{
     }   
     chats = await  request('/users/my', 'POST', newMessage)
     renderChat(+(window.localStorage.getItem('userId')))
-    
 }
+
+
+setInterval(() => {
+    renderMyUsers()
+}, 1000);
+
+setInterval(async() => {
+    chats = await  request('/users/my')
+    renderChat(+(window.localStorage.getItem('userId')))
+}, 2000);
+
+
+
 
 renderUsers()   
 renderMyUsers()

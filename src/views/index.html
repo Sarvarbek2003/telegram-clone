@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div class="container app">
   <div class="row app-one">
-    <div class="col-sm-4 side">
+    <div class="col-sm-4 side ">
       <div class="side-one">
         <div class="row heading">
           <div class="col-sm-3 col-xs-3 heading-avatar">
@@ -713,7 +713,7 @@ body {
     padding: 0 !important;
     margin: 0 !important;
     height: 100%;
-    /*width: 100%;*/
+    /* width: 100%; */
     border-left: 1px solid rgba(0, 0, 0, .08);
     /*overflow-y: auto;*/
   }
@@ -762,16 +762,19 @@ body {
 <script type="text/javascript">
 $(function(){
     $(".heading-compose").click(function() {
-      $(".side-two").css({
-        "left": "0"
+      // $(".side-two").css({
+      //   "left": "0"
+      // });
+      $(".side").css({
+        "width": "0"
       });
     });
 
-    $(".newMessage-back").click(function() {
-      $(".side-two").css({
-        "left": "-100%"
-      });
-    });
+    // $(".newMessage-back").click(function() {
+    //   $(".side-two").css({
+    //     "left": "-100%"
+    //   });
+    // });
 })
 </script>
 </body>
