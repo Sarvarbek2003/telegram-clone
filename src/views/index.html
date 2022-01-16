@@ -762,19 +762,16 @@ body {
 <script type="text/javascript">
 $(function(){
     $(".heading-compose").click(function() {
-      // $(".side-two").css({
-      //   "left": "0"
-      // });
-      $(".side").css({
-        "width": "0"
+      $(".side-two").css({
+        "left": "0"
+      });
+      
+    });
+    $(".newMessage-back").click(function() {
+      $(".side-two").css({
+        "left": "-100%"
       });
     });
-
-    // $(".newMessage-back").click(function() {
-    //   $(".side-two").css({
-    //     "left": "-100%"
-    //   });
-    // });
 })
 </script>
 </body>
